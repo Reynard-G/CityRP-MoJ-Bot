@@ -1,0 +1,32 @@
+{
+  "name": "discordjs-v14-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --check \"**/*.{js,jsx}\"",
+    "format:fix": "prettier --write \"**/*.{js,jsx}\"",
+    "start": "node index.js",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:pull": "drizzle-kit introspect",
+    "drizzle:migrate": "drizzle-kit migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "drizzle-kit": "^0.22.7",
+    "node": "^16.20.2",
+    "prettier": "3.3.2"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^2.3.0",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.89",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.31.2",
+    "ms": "^2.1.3",
+    "mysql2": "^3.10.1"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "criminalEvidence": {
+      "name": "criminalEvidence",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(10) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "indictment_id": {
+          "autoincrement": false,
+          "name": "indictment_id",
+          "type": "int(10) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attachment": {
+          "autoincrement": false,
+          "name": "attachment",
+          "type": "mediumblob",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {
+        "FK_criminalEvidence_criminalIndictments": {
+          "name": "FK_criminalEvidence_criminalIndictments",
+          "tableFrom": "criminalEvidence",
+          "tableTo": "criminalIndictments",
+          "columnsFrom": [
+            "indictment_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "criminalIndictments": {
+      "name": "criminalIndictments",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(10) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "criminal_id": {
+          "autoincrement": false,
+          "name": "criminal_id",
+          "type": "smallint(5) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "officer_discord_id": {
+          "autoincrement": false,
+          "name": "officer_discord_id",
+          "type": "varchar(24)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "charges": {
+          "autoincrement": false,
+          "name": "charges",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "jailTime": {
+          "autoincrement": false,
+          "name": "jailTime",
+          "type": "int(10) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fine": {
+          "autoincrement": false,
+          "name": "fine",
+          "type": "decimal(64,2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "message_id",
+          "type": "varchar(24)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {
+        "FK_criminalIndictments_criminal": {
+          "name": "FK_criminalIndictments_criminal",
+          "tableFrom": "criminalIndictments",
+          "tableTo": "criminals",
+          "columnsFrom": [
+            "criminal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "criminals": {
+      "name": "criminals",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "smallint(5) unsigned",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "autoincrement": false,
+          "name": "username",
+          "type": "varchar(16)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "thread_id": {
+          "autoincrement": false,
+          "name": "thread_id",
+          "type": "varchar(24)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
