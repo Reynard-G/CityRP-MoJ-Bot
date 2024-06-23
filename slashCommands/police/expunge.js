@@ -103,7 +103,10 @@ module.exports = {
       }
 
       // Expunge the indictment in the database
-      await db.update(criminalIndictments).set({ expunged: true }).where({ id: indictmentId });
+      await db
+        .update(criminalIndictments)
+        .set({ expunged: true })
+        .where({ id: indictmentId });
 
       // Edit the indictment embed to show that it has been expunged
       const indictmentDiscordDetails = (
@@ -125,13 +128,18 @@ module.exports = {
         .messages.fetch(indictmentDiscordDetails.message_id);
       const indictmentEmbed = EmbedBuilder.from(indictmentMessage.embeds[0]);
 
-      indictmentEmbed.setTitle("Indictment Expunged").setDescription(`~~${indictmentEmbed.data.description}~~`).setColor("Red");
+      indictmentEmbed
+        .setTitle("Indictment Expunged")
+        .setDescription(`~~${indictmentEmbed.data.description}~~`)
+        .setColor("Red");
 
       await indictmentMessage.edit({ embeds: [indictmentEmbed] });
 
       const successEmbed = new EmbedBuilder()
         .setTitle("Indictment Expunged")
-        .setDescription(`The indictment ID, **${indictmentId}**, has been expunged.`)
+        .setDescription(
+          `The indictment ID, **${indictmentId}**, has been expunged.`
+        )
         .setColor("Green")
         .setFooter({
           text: interaction.guild.name,
@@ -139,11 +147,16 @@ module.exports = {
         });
       return interaction.reply({ embeds: [successEmbed], ephemeral: true });
     } catch (error) {
-      log.error("An error occurred while expunging a criminal's charges.", error);
+      log.error(
+        "An error occurred while expunging a criminal's charges.",
+        error
+      );
 
       const errorEmbed = new EmbedBuilder()
         .setTitle("An Error Occurred")
-        .setDescription("An error occurred while expunging a criminal's charges.")
+        .setDescription(
+          "An error occurred while expunging a criminal's charges."
+        )
         .setColor("Red")
         .setFooter({
           text: interaction.guild.name,
