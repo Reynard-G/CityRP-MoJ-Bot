@@ -18,6 +18,7 @@ module.exports = {
   name: "evidence",
   description: "Submit evidence against a criminal.",
   type: ApplicationCommandType.ChatInput,
+  userRoles: [process.env.POLICE_ROLE_ID],
   options: [
     {
       name: "indictment",

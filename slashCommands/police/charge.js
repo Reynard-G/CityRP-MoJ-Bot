@@ -17,6 +17,7 @@ module.exports = {
   name: "charge",
   description: "Charge a criminal.",
   type: ApplicationCommandType.ChatInput,
+  userRoles: [process.env.POLICE_ROLE_ID],
   options: [
     {
       name: "offender",
