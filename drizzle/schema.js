@@ -5,6 +5,7 @@ const {
   smallint,
   varchar,
   decimal,
+  tinyint,
   customType,
 } = require("drizzle-orm/mysql-core");
 
@@ -45,6 +46,7 @@ const criminalIndictments = mysqlTable("criminalIndictments", {
   fine: decimal("fine", { precision: 64, scale: 2 }).notNull(),
   summary: varchar("summary", { length: 1024 }).default("NULL"),
   message_id: varchar("message_id", { length: 24 }).default("NULL"),
+  expunged: tinyint("expunged").default(0).notNull(),
   updated_at: timestamp("updated_at", { mode: "string" })
     .default("current_timestamp()")
     .notNull(),
@@ -65,4 +67,8 @@ const criminals = mysqlTable("criminals", {
     .notNull(),
 });
 
-module.exports = { criminalEvidence, criminalIndictments, criminals };
+module.exports = {
+  criminalEvidence,
+  criminalIndictments,
+  criminals,
+};
