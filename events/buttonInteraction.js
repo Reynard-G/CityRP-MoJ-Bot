@@ -10,6 +10,7 @@ client.on("interactionCreate", async (interaction) => {
   if (!button) return;
 
   try {
+    // Check if user has the required permissions to interact with the button
     if (button.permissions) {
       if (
         !interaction.memberPermissions.has(
@@ -18,10 +19,24 @@ client.on("interactionCreate", async (interaction) => {
       ) {
         const perms = new EmbedBuilder()
           .setDescription(
-            `🚫 ${interaction.user}, You don't have \`${button.permissions}\` permissions to interact this button!`
+            `🚫 ${interaction.user}, you don't have \`${button.permissions}\` permissions to interact this button!`
           )
           .setColor("Red");
         return interaction.reply({ embeds: [perms], ephemeral: true });
+      }
+    }
+
+    // Check if the user has the required roles to interact with the button
+    if (button.userRoles) {
+      const memberRoles = interaction.member.roles.cache.map((r) => r.id);
+
+      if (!memberRoles.some((r) => button.userRoles.includes(r))) {
+        const rolesEmbed = new EmbedBuilder()
+          .setDescription(
+            `🚫 ${interaction.user}, you don't have the required roles to interact with this button!`
+          )
+          .setColor("Red");
+        return interaction.reply({ embeds: [rolesEmbed], ephemeral: true });
       }
     }
 

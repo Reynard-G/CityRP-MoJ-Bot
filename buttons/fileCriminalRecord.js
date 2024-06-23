@@ -11,6 +11,7 @@ const {
 module.exports = {
   id: "fileCriminalRecordButton",
   permissions: [],
+  userRoles: [process.env.POLICE_ROLE_ID],
   /**
    * @param {Client} client
    * @param {ButtonInteraction} interaction
