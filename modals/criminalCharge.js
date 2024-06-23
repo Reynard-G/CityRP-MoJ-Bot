@@ -25,6 +25,9 @@ module.exports = {
       const fine = interaction.fields.getTextInputValue(
         "criminalChargeModal-fineInput"
       );
+      const summary = interaction.fields.getTextInputValue(
+        "criminalChargeModal-summaryInput"
+      );
 
       // Check if `name` record already exists in the database
       const record = await db
@@ -70,8 +73,9 @@ module.exports = {
         criminal_id: record[0].id,
         officer_discord_id: interaction.user.id,
         charges: charges,
-        jailTime: ms(jailTime), 
+        jailTime: ms(jailTime),
         fine: parseFloat(fine.replace(/[^0-9.-]/g, "")), // Strip everything except numbers, decimals, and negative signs
+        summary: summary || null,
       });
 
       // Get the channel and create message
@@ -101,6 +105,10 @@ module.exports = {
               style: "currency",
               currency: "USD",
             }).format(parseFloat(fine.replace(/[^0-9.-]/g, "")))}`,
+          },
+          {
+            name: "Summary",
+            value: summary || "N/A",
           },
         ])
         .setColor(0x135dd8)
@@ -133,6 +141,7 @@ module.exports = {
         });
       return interaction.reply({ embeds: [chargeFiledEmbed], ephemeral: true });
     } catch (error) {
+      console.log(error);
       log.error("An error occurred while filing the criminal charge.", error);
 
       const errorEmbed = new EmbedBuilder()

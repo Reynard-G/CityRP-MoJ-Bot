@@ -112,11 +112,19 @@ module.exports = {
       .setRequired(true)
       .setMaxLength(64);
 
+    const summaryInput = new TextInputBuilder()
+      .setCustomId("criminalChargeModal-summaryInput")
+      .setLabel("Summary")
+      .setStyle(TextInputStyle.Paragraph)
+      .setRequired(false)
+      .setMaxLength(1024);
+
     modal.addComponents(
       new ActionRowBuilder().addComponents(nameInput),
       new ActionRowBuilder().addComponents(chargesInput),
       new ActionRowBuilder().addComponents(jailTimeInput),
-      new ActionRowBuilder().addComponents(fineInput)
+      new ActionRowBuilder().addComponents(fineInput),
+      new ActionRowBuilder().addComponents(summaryInput)
     );
 
     return await interaction.showModal(modal);

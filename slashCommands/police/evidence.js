@@ -7,7 +7,11 @@ const {
 } = require("discord.js");
 const { eq, desc } = require("drizzle-orm");
 const db = require("../../lib/db");
-const { criminals, criminalIndictments, criminalEvidence } = require("../../drizzle/schema");
+const {
+  criminals,
+  criminalIndictments,
+  criminalEvidence,
+} = require("../../drizzle/schema");
 const log = require("../../logger");
 
 module.exports = {
@@ -112,14 +116,15 @@ module.exports = {
       const evidence8 = interaction.options.get("evidence_8")?.attachment;
 
       // Check if the indictment exists in the database
-      const indictment = (await db
-        .select()
-        .from(criminalIndictments)
-        .where({ id: indictmentId }))[0];
+      const indictment = (
+        await db.select().from(criminalIndictments).where({ id: indictmentId })
+      )[0];
       if (!indictment) {
         const indictmentNotFoundEmbed = new EmbedBuilder()
           .setTitle("Indictment Not Found")
-          .setDescription(`The indictment ID, **${indictmentId}**, does not exist.`)
+          .setDescription(
+            `The indictment ID, **${indictmentId}**, does not exist.`
+          )
           .setColor("Red")
           .setFooter({
             text: interaction.guild.name,
@@ -132,10 +137,23 @@ module.exports = {
         });
       }
 
-      const evidenceRecords = [evidence1, evidence2, evidence3, evidence4, evidence5, evidence6, evidence7, evidence8].filter(Boolean);
+      const evidenceRecords = [
+        evidence1,
+        evidence2,
+        evidence3,
+        evidence4,
+        evidence5,
+        evidence6,
+        evidence7,
+        evidence8,
+      ].filter(Boolean);
 
       // Check if all attachments are images
-      if (evidenceRecords.some((evidence) => !evidence.contentType.startsWith("image/"))) {
+      if (
+        evidenceRecords.some(
+          (evidence) => !evidence.contentType.startsWith("image/")
+        )
+      ) {
         const invalidAttachmentEmbed = new EmbedBuilder()
           .setTitle("Invalid Attachment Type(s)")
           .setDescription("All attachments must be images.")
@@ -174,33 +192,40 @@ module.exports = {
         const buffer = await res.arrayBuffer();
         const base64 = Buffer.from(buffer);
 
-        return db
-          .insert(criminalEvidence)
-          .values({
-            indictment_id: indictmentId,
-            attachment: base64,
-          });
+        return db.insert(criminalEvidence).values({
+          indictment_id: indictmentId,
+          attachment: base64,
+        });
       });
 
       await Promise.all(evidencePromises);
 
-      const indictmentDiscordDetails = (await db
-        .select({
-          message_id: criminalIndictments.message_id,
-          thread_id: criminals.thread_id,
-        })
-        .from(criminalIndictments)
-        .innerJoin(criminals, eq(criminals.id, criminalIndictments.criminal_id))
-        .where(eq(criminalIndictments.id, indictmentId)))[0];
+      const indictmentDiscordDetails = (
+        await db
+          .select({
+            message_id: criminalIndictments.message_id,
+            thread_id: criminals.thread_id,
+          })
+          .from(criminalIndictments)
+          .innerJoin(
+            criminals,
+            eq(criminals.id, criminalIndictments.criminal_id)
+          )
+          .where(eq(criminalIndictments.id, indictmentId))
+      )[0];
 
-      const indictmentMessage = await interaction.guild.channels.cache.get(indictmentDiscordDetails.thread_id).messages.fetch(indictmentDiscordDetails.message_id);
+      const indictmentMessage = await interaction.guild.channels.cache
+        .get(indictmentDiscordDetails.thread_id)
+        .messages.fetch(indictmentDiscordDetails.message_id);
 
       const evidenceSubmittedEmbed = new EmbedBuilder()
         .setTitle("Evidence Submitted")
-        .setDescription(`
+        .setDescription(
+          `
           Evidence has been submitted for indictment **#${indictmentId}**.
           Please manually post the evidence replying to the following message: ${indictmentMessage.url}
-          `)
+          `
+        )
         .setColor("Green")
         .setFooter({
           text: interaction.guild.name,
@@ -221,5 +246,5 @@ module.exports = {
         });
       return interaction.editReply({ embeds: [errorEmbed], ephemeral: true });
     }
-  }
+  },
 };
