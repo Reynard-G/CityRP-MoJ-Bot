@@ -235,7 +235,6 @@ module.exports = {
       return interaction.editReply({ embeds: [evidenceSubmittedEmbed] });
     } catch (error) {
       log.error("An error occurred while submitting evidence.", error);
-      console.log(error);
 
       const errorEmbed = new EmbedBuilder()
         .setTitle("An Error Occurred")

@@ -37,7 +37,6 @@ client.on("interactionCreate", async (interaction) => {
 
     await modal.run(client, interaction);
   } catch (error) {
-    console.log(error);
     log.error(
       `Error while executing modal "${modal.id}" | ${error}`,
       "events/modalInteraction.js"

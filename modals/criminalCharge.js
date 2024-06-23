@@ -141,7 +141,6 @@ module.exports = {
         });
       return interaction.reply({ embeds: [chargeFiledEmbed], ephemeral: true });
     } catch (error) {
-      console.log(error);
       log.error("An error occurred while filing the criminal charge.", error);
 
       const errorEmbed = new EmbedBuilder()
