@@ -39,7 +39,8 @@ module.exports = {
       })
       .from(criminalIndictments)
       .innerJoin(criminals, eq(criminals.id, criminalIndictments.criminal_id))
-      .orderBy(desc(criminalIndictments.id));
+      .orderBy(desc(criminalIndictments.id))
+      .limit(25);
 
     const filteredData = data.filter((indictment) => {
       const name = `#${indictment.id} • ${indictment.username} • ${indictment.charges}`;

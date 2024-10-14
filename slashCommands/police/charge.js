@@ -36,7 +36,8 @@ module.exports = {
       .select({
         username: criminals.username,
       })
-      .from(criminals);
+      .from(criminals)
+      .limit(25);
 
     data.forEach((criminal) => {
       choices.push({
