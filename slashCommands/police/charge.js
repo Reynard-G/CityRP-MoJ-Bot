@@ -12,6 +12,7 @@ const {
 const db = require("../../lib/db");
 const { criminals } = require("../../drizzle/schema");
 const log = require("../../logger");
+const { like } = require("drizzle-orm");
 
 module.exports = {
   name: "charge",
@@ -32,12 +33,22 @@ module.exports = {
    * @param {[]} choices
    */
   autocomplete: async (interaction, choices) => {
-    const data = await db
-      .select({
-        username: criminals.username,
-      })
-      .from(criminals)
-      .limit(25);
+    const focusedValue = interaction.options.getFocused();
+
+    const data = focusedValue
+      ? await db
+          .select({
+            username: criminals.username,
+          })
+          .from(criminals)
+          .where(like(criminals.username, `%${focusedValue}%`))
+          .limit(25)
+      : await db
+          .select({
+            username: criminals.username,
+          })
+          .from(criminals)
+          .limit(25);
 
     data.forEach((criminal) => {
       choices.push({
