@@ -38,7 +38,7 @@ module.exports = (client) => {
       if (slashCommand.name) {
         client.slashCommands.set(slashCommand.name, slashCommand);
       } else {
-        log.warning(`Failed to load slash command "${file}"`);
+        log.warn(`Failed to load slash command "${file}"`);
       }
     }
   });
