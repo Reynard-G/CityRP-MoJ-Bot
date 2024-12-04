@@ -233,8 +233,7 @@ module.exports = {
         .setTitle("Evidence Submitted")
         .setDescription(
           `
-          Evidence has been submitted for indictment **#${indictmentId}**.
-          Please manually post the evidence replying to the following message: ${indictmentMessage.url}
+          Evidence has been submitted for indictment **#${indictmentId}** in ${indictmentMessage.url}
           `
         )
         .setColor("Green")
