@@ -220,6 +220,15 @@ module.exports = {
         .get(indictmentDiscordDetails.thread_id)
         .messages.fetch(indictmentDiscordDetails.message_id);
 
+      // Send reply to indictment message with evidence attached
+      indictmentMessage.reply({
+        content: `Evidence has been submitted for indictment **#${indictmentId}**.`,
+        files: evidenceRecords.map((evidence) => ({
+          attachment: evidence.url,
+          name: evidence.name,
+        })),
+      });
+
       const evidenceSubmittedEmbed = new EmbedBuilder()
         .setTitle("Evidence Submitted")
         .setDescription(
